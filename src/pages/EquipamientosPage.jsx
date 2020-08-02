@@ -9,15 +9,18 @@ const EquipamientosPage = () => {
     useEffect(() => {
         equipamientosService.getEquipamientos().then(res =>{
             setEquipamientos(res.data);
+            console.log(res);
         }).catch(error => {
             console.log(error);
         });
     }, []);
 
     
-  const equipamientosItems = equipamientos.map((tienda) =>
-  <li key={tienda.id}>
-    {tienda.nombre} - {tienda.direccion}
+  const equipamientosItems = equipamientos.map((equipamiento) =>
+  <li key={equipamiento.id}>
+    {equipamiento.nombre ?? "campo nulo"} - {equipamiento.tipo ?? "campo nulo"} 
+    - {equipamiento.ubicacion ?? "campo nulo"} - {equipamiento.estado ?? "campo nulo"}
+
   </li>
 );
     return(

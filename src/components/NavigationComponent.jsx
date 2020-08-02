@@ -16,9 +16,6 @@ const NavigationComponent = () => {
                 <Link to= "/welcome"> Welcome</Link>
             </div>
             <div className = "container center_div">
-                <Link to= "/tiendas"> Tiendas</Link>
-            </div>
-            <div className = "container center_div">
                 <Link to= "/equipamientos"> Equipamientos</Link>
             </div>
         </div>
