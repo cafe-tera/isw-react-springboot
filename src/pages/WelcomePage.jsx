@@ -4,6 +4,7 @@ import NavigationComponent from '../components/NavigationComponent';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import  { Container, Row, Col } from 'reactstrap';
 
+
 const WelcomePage = () => {
 
     const [nombre,setNombre] = React.useState(""); //Crea la variable "nombre", y lo inicializa con un string vacío.
