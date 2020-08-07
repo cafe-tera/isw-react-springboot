@@ -15,7 +15,7 @@ const getEquipamientosById = async (id) => {
 
 const crearEquipamiento = async (equipamiento) => {
   let url = `${API_URL}/equipamientos/`;
-  return axios.post(url, { equipamiento });
+  return axios.post(url,  equipamiento );
 }
 
 const actualizarEquipamiento = async (equipamiento, id) => {

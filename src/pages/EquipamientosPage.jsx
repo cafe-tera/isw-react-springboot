@@ -25,12 +25,17 @@ function SimpleDialog(props) {
 
   const handleAdd = () => {
     const equipamiento = {
-      nombre : "aguja",
-      tipo : "aguja",
-      ubicacion : "cajon3",
-      estado : "disponible"
-    }
-    equipamientosService.crearEquipamiento(equipamiento);
+      nombre: "aguja",
+      tipo: "aguja",
+      ubicacion: "cajon3",
+      estado: "disponible",
+    };
+    equipamientosService.crearEquipamiento({
+      nombre: "respirador artificial",
+      tipo: "respirador",
+      ubicacion: "bodega3",
+      estado: "disponible",
+    });
     onClose(selectedValue);
   };
 
@@ -138,7 +143,10 @@ const EquipamientosPage = () => {
         </button>
       </td>
       <td>
-        <button onClick={equipamientosService.eliminarEquipamiento(equipamiento.id)} class="btn btn-danger" >
+        <button
+          onClick={equipamientosService.eliminarEquipamiento(equipamiento.id)}
+          class="btn btn-danger"
+        >
           Eliminar
         </button>
       </td>
