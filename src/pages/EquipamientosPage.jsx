@@ -23,6 +23,17 @@ function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
   const [currency, setCurrency] = React.useState("disponible");
 
+  const handleAdd = () => {
+    const equipamiento = {
+      nombre : "aguja",
+      tipo : "aguja",
+      ubicacion : "cajon3",
+      estado : "disponible"
+    }
+    equipamientosService.crearEquipamiento(equipamiento);
+    onClose(selectedValue);
+  };
+
   const handleClose = () => {
     onClose(selectedValue);
   };
@@ -83,7 +94,7 @@ function SimpleDialog(props) {
         <button onClick={handleClose} class="btn btn-danger">
           Cancel
         </button>
-        <button onClick={handleClose} class="btn btn-primary mb-2">
+        <button onClick={handleAdd} class="btn btn-primary mb-2">
           Agregar
         </button>
       </DialogActions>
@@ -122,14 +133,14 @@ const EquipamientosPage = () => {
       <td>{equipamiento.ubicacion ?? "campo nulo"}</td>
       <td>{equipamiento.estado ?? "campo nulo"}</td>
       <td>
-        <a href="/equipamientos/" class="btn btn-warning">
+        <button href="/equipamientos/" class="btn btn-warning">
           Editar
-        </a>
+        </button>
       </td>
       <td>
-        <a href="/equipamientos/" class="btn btn-danger">
+        <button onClick={equipamientosService.eliminarEquipamiento(equipamiento.id)} class="btn btn-danger" >
           Eliminar
-        </a>
+        </button>
       </td>
     </tr>
   ));
