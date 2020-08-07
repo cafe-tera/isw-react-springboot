@@ -158,7 +158,7 @@ export default class ChairsList extends Component {
                 <label>
                   <strong>Estatus:</strong>
                 </label>{" "}
-                {currentChair.occupied ? "Ocupado" : "Free"}
+                {currentChair.occupied ? "Ocupado" : "Libre"}
               </div>
               <div className="grid-box">
             {currentChair.occupied ? (

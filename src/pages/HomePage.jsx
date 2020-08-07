@@ -1,6 +1,5 @@
 import React from 'react';
 
-import NavigationComponent from '../components/NavigationComponent';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import history from './../history';
 import { Button } from 'react-bootstrap';
@@ -20,7 +19,7 @@ const HomePage = () => {
                 integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" 
                 crossOrigin="anonymous"></link>
             <title> Título de Home</title>
-            <NavigationComponent/>
+
             <Row>
                 <Col>
                     <Container className='p-4'>

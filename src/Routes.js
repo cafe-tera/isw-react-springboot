@@ -17,6 +17,8 @@ export default class Routes extends Component {
                     <Route exact path={["/", "/chairs"]} component={ChairsList} />
                     <Route exact path="/add" component={AddChair} />
                     <Route path="/chairs/:id" component={Chair} />
+                    <Route exact path ="/pabellones" component={PabellonesPage}></Route>
+                    <Route exact path ="/salasrecuperacion" component={SalasPage}></Route>
                 </Switch>
             </Router>
         )
