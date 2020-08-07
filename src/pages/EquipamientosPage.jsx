@@ -17,20 +17,44 @@ const EquipamientosPage = () => {
 
     
   const equipamientosItems = equipamientos.map((equipamiento) =>
-  <li key={equipamiento.id}>
-    {equipamiento.nombre ?? "campo nulo"} - {equipamiento.tipo ?? "campo nulo"} 
-    - {equipamiento.ubicacion ?? "campo nulo"} - {equipamiento.estado ?? "campo nulo"}
-
-  </li>
+<tr>
+                <td>{equipamiento.nombre ?? "campo nulo"}</td>
+                <td>{equipamiento.tipo ?? "campo nulo"} </td>
+                <td>{equipamiento.ubicacion ?? "campo nulo"}</td>
+                <td>{equipamiento.estado ?? "campo nulo"}</td>
+                <td>
+                    <a href="/equipamientos/" class="btn btn-warning">
+                        Editar
+                    </a>
+                </td>
+                <td>
+                    <a href="/equipamientos/" class="btn btn-danger">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
 );
     return(
-        <div>
-
-            <div>Lista de todas las Equipamientos</div>
-            <ul>
-                {equipamientosItems}
-            </ul>
-        </div>
+    <div class="col-12">
+    <h1>Equipamientos -
+    <a href="/equipamientos/agregar" class="btn btn-primary mb-2">Agregar</a>
+    </h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Ubicacion</th>
+                <th>Estado</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {equipamientosItems}
+        </tbody>
+    </table>
+</div>
     )
 }
 

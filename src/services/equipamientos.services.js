@@ -3,56 +3,37 @@ import axios from 'axios';
 const API_URL = "https://isw-rifeco-equipamientos.herokuapp.com"
 
 
-const getEquipamientos = async () =>{
+const getEquipamientos = () =>{
   let url = `${API_URL}/equipamientos/`;
-  return axios.get(url)
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-  });
+  return axios.get(url);
 }
 
 const getEquipamientosById = async (id) => {
   let url = `${API_URL}/equipamientos/${id}`;
-  return axios.get(url)
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-  });
+  return axios.get(url);
 }
 
 const crearEquipamiento = async (equipamiento) => {
   let url = `${API_URL}/equipamientos/`;
-  return axios.post(url, { equipamiento })
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-  });
+  return axios.post(url, { equipamiento });
 }
 
-const crearEquipamiento = async (equipamiento, id) => {
+const actualizarEquipamiento = async (equipamiento, id) => {
   let url = `${API_URL}/equipamientos/${id}`;
-  return axios.put(url, { equipamiento })
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-  });
+  return axios.put(url, { equipamiento });
 }
 
 
 const eliminarEquipamiento = async (id) => {
   let url = `${API_URL}/equipamientos/${id}`;
-  return axios.delete(url)
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-  });
+  return axios.delete(url);
 }
 
 const equipamientosService = {
     getEquipamientos,
     getEquipamientosById,
     crearEquipamiento,
+    actualizarEquipamiento,
     eliminarEquipamiento,
 };
 
