@@ -5,12 +5,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import TextField from "@material-ui/core/TextField";
-import { blue } from "@material-ui/core/colors";
 
 import equipamientosService from "../services/equipamientos.services";
 
 function SimpleDialog(props) {
-  const currencies = [
+  const disponibilidad = [
     {
       value: "prestado",
       label: "prestado",
@@ -21,34 +20,42 @@ function SimpleDialog(props) {
     },
   ];
   const { onClose, selectedValue, open } = props;
-  const [currency, setCurrency] = React.useState("disponible");
-
-  const handleAdd = () => {
-    const equipamiento = {
-      nombre: "aguja",
-      tipo: "aguja",
-      ubicacion: "cajon3",
-      estado: "disponible",
-    };
-    equipamientosService.crearEquipamiento({
-      nombre: "respirador artificial",
-      tipo: "respirador",
-      ubicacion: "bodega3",
-      estado: "disponible",
-    });
-    onClose(selectedValue);
-  };
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
+  const [nombre, setNombre] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [ubicacion, setUbicacion] = useState("");
+  const [disponible, setDisponible] = React.useState("disponible");
 
   const handleChange = (event) => {
-    setCurrency(event.target.value);
+    console.log(event)
+    const keyname = event.target.name;
+    if (keyname === "nombre") {
+      setNombre(event.target.value);
+    } else if (keyname === "tipo") {
+      setTipo(event.target.value);
+    } else if (keyname === "ubicacion") {
+      setUbicacion(event.target.value);
+    } else if (keyname === "tipo") {
+      setTipo(event.target.value);
+    } else if (keyname === "estado") {
+      setDisponible(event.target.value);
+    } else {
+      setDisponible(event.target.value);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    console.log(event.target.value);
+    event.preventDefault();
+    equipamientosService
+      .crearEquipamiento(nombre, tipo, ubicacion, disponible)
+      .then((res) => {
+        console.log(res);
+      });
+    onClose(selectedValue);
+  };
+
+  const handleClose = (event) => {
+    onClose(selectedValue);
   };
 
   return (
@@ -66,29 +73,44 @@ function SimpleDialog(props) {
           autoFocus
           margin="dense"
           id="nombre"
+          key="nombre"
+          name="nombre"
           label="Nombre"
           fullWidth
+          onChange={(event) => handleChange(event)}
         />
-        <TextField autoFocus margin="dense" id="tipo" label="Tipo" fullWidth />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="tipo"
+          key="tipo"
+          name="tipo"
+          label="Tipo"
+          onChange={(event) => handleChange(event)}
+          fullWidth
+        />
         <TextField
           autoFocus
           margin="dense"
           id="ubicacion"
+          key="ubicacion"
+          name="ubicacion"
           label="Ubicacion"
           fullWidth
+          onChange={(event) => handleChange(event)}
         />
         <TextField
           autoFocus
           margin="dense"
           id="estado"
+          name="estado"
           select
           fullWidth
           label="Estado"
-          value={currency}
-          onChange={handleChange}
-          helperText="Please select your currency"
+          value={disponible}
+          onChange={(event) => handleChange(event)}
         >
-          {currencies.map((option) => (
+          {disponibilidad.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
@@ -96,10 +118,17 @@ function SimpleDialog(props) {
         </TextField>
       </DialogContent>
       <DialogActions>
-        <button onClick={handleClose} class="btn btn-danger">
+        <button
+          onClick={(event) => handleClose(event)}
+          className="btn btn-danger"
+        >
           Cancel
         </button>
-        <button onClick={handleAdd} class="btn btn-primary mb-2">
+        <button
+          type="submit"
+          onClick={(e) => handleSubmit(e)}
+          className="btn btn-primary mb-2"
+        >
           Agregar
         </button>
       </DialogActions>
@@ -110,7 +139,7 @@ function SimpleDialog(props) {
 const EquipamientosPage = () => {
   const [equipamientos, setEquipamientos] = useState([]);
   const [open, setOpen] = React.useState(false);
-
+ 
   useEffect(() => {
     equipamientosService
       .getEquipamientos()
@@ -121,31 +150,35 @@ const EquipamientosPage = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [equipamientos]);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (event) => {
     setOpen(true);
   };
 
-  const handleClose = (value) => {
+  const handleClose = (event) => {
     setOpen(false);
   };
 
   const equipamientosItems = equipamientos.map((equipamiento) => (
-    <tr>
+    console.log(equipamiento),
+    <tr key={equipamiento.id} >
       <td>{equipamiento.nombre ?? "campo nulo"}</td>
       <td>{equipamiento.tipo ?? "campo nulo"} </td>
       <td>{equipamiento.ubicacion ?? "campo nulo"}</td>
       <td>{equipamiento.estado ?? "campo nulo"}</td>
       <td>
-        <button href="/equipamientos/" class="btn btn-warning">
+        <button href="/equipamientos/" className="btn btn-warning">
           Editar
         </button>
       </td>
       <td>
         <button
-          onClick={equipamientosService.eliminarEquipamiento(equipamiento.id)}
-          class="btn btn-danger"
+          onClick={(event) => {
+            event.preventDefault();
+            equipamientosService.eliminarEquipamiento(equipamiento.id);
+          }}
+          className="btn btn-danger"
         >
           Eliminar
         </button>
@@ -153,14 +186,17 @@ const EquipamientosPage = () => {
     </tr>
   ));
   return (
-    <div class="col-12">
+    <div className="col-12">
       <h1>
         Equipamientos -
-        <button class="btn btn-primary mb-2" onClick={handleClickOpen}>
+        <button
+          className="btn btn-primary mb-2"
+          onClick={(event) => handleClickOpen(event)}
+        >
           Agregar
         </button>
       </h1>
-      <table class="table table-bordered">
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -173,7 +209,7 @@ const EquipamientosPage = () => {
         </thead>
         <tbody>{equipamientosItems}</tbody>
       </table>
-      <SimpleDialog open={open} onClose={handleClose} />
+      <SimpleDialog open={open} onClose={(event) => handleClose(event)} />
     </div>
   );
 };
