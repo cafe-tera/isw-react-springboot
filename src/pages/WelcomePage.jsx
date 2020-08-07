@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
-import NavigationComponent from '../components/NavigationComponent';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import  { Container, Row, Col } from 'reactstrap';
+
 
 const WelcomePage = () => {
 
@@ -28,7 +28,7 @@ const WelcomePage = () => {
     return(
         <div className = "container center_div">
             <title> Título de 'WelcomePage'</title>
-            <NavigationComponent/>
+
             <Row>
                 <Col>
                     <Container className='p-5'>

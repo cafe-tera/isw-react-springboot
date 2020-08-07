@@ -1,6 +1,9 @@
 import React,{useState, useEffect} from 'react';
 
+<<<<<<< HEAD
 import NavigationComponent from '../components/NavigationComponent';
+=======
+>>>>>>> master
 import pabellonesService from '../services/pabellones.services';
 
 const PabellonesPage = () => {
@@ -26,7 +29,10 @@ const PabellonesPage = () => {
 
     return(
         <div>
+<<<<<<< HEAD
             <NavigationComponent></NavigationComponent>
+=======
+>>>>>>> master
             <div>Lista de todas las Equipamientos</div>
             <table class="egt">
                 <tr>

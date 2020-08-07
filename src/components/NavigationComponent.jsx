@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 
-const NavigationComponent = () => {
+const NavigationComponentDos = () => {
 
     return(
         <div>
@@ -28,4 +28,4 @@ const NavigationComponent = () => {
     )
 }
 
-export default NavigationComponent;
+export default NavigationComponentDos;

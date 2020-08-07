@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 
-import NavigationComponent from '../components/NavigationComponent';
+
 import equipamientosService from '../services/equipamientos.services';
 
 const EquipamientosPage = () => {
@@ -25,7 +25,7 @@ const EquipamientosPage = () => {
 );
     return(
         <div>
-            <NavigationComponent></NavigationComponent>
+
             <div>Lista de todas las Equipamientos</div>
             <ul>
                 {equipamientosItems}

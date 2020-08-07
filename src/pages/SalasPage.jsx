@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react';
 
-import NavigationComponent from '../components/NavigationComponent';
 import salasService from '../services/salas.services';
 
 const SalasPage = () => {
@@ -26,7 +25,6 @@ const SalasPage = () => {
 
     return(
         <div>
-            <NavigationComponent></NavigationComponent>
             <div>Lista de todas las Equipamientos</div>
             <table class="egt">
                 <tr>
