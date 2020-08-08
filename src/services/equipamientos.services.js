@@ -22,9 +22,14 @@ const crearEquipamiento = async (nombre, tipo, ubicacion, disponibilidad) => {
   });
 };
 
-const actualizarEquipamiento = async (equipamiento, id) => {
+const actualizarEquipamiento = async (id, nombre, tipo, ubicacion, disponibilidad) => {
   let url = `${API_URL}/equipamientos/${id}`;
-  return axios.put(url, { equipamiento });
+  return axios.put(url,  {
+    nombre: nombre,
+    tipo: tipo,
+    ubicacion: ubicacion,
+    estado: disponibilidad
+  });
 };
 
 const eliminarEquipamiento = async (id) => {

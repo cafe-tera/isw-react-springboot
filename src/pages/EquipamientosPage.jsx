@@ -8,7 +8,104 @@ import TextField from "@material-ui/core/TextField";
 
 import equipamientosService from "../services/equipamientos.services";
 
-function SimpleDialog(props) {
+//----------------------------------------------------------------------
+//              MAIN PAGE
+//----------------------------------------------------------------------
+const EquipamientosPage = () => {
+  const [equipamientos, setEquipamientos] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [openEdit, setOpenEdit] = React.useState(false);
+ 
+  useEffect(() => {
+    equipamientosService
+      .getEquipamientos()
+      .then((res) => {
+        setEquipamientos(res.data);
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [equipamientos]);
+
+  const handleClickOpen = (event) => {
+    setOpen(true);
+  };
+
+  const handleClose = (event) => {
+    setOpen(false);
+  };
+
+  const handleClickOpenEdit = (event) => {
+    setOpenEdit(true);
+  };
+
+  const handleCloseEdit = (event) => {
+    setOpenEdit(false);
+  };
+
+  const equipamientosItems = equipamientos.map((equipamiento) => (
+    console.log(equipamiento),
+    <tr key={equipamiento.id} >
+      <td>{equipamiento.nombre ?? "campo nulo"}</td>
+      <td>{equipamiento.tipo ?? "campo nulo"} </td>
+      <td>{equipamiento.ubicacion ?? "campo nulo"}</td>
+      <td>{equipamiento.estado ?? "campo nulo"}</td>
+      <td>
+        <button onClick={(event) => handleClickOpenEdit(event)} className="btn btn-warning">
+          Editar
+        </button>
+      </td>
+      <td>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            equipamientosService.eliminarEquipamiento(equipamiento.id);
+          }}
+          className="btn btn-danger"
+        >
+          Eliminar
+        </button>
+      </td>
+      <EditEquipamiento open={openEdit} equipamiento={equipamiento} onClose={(event) => handleCloseEdit(event)} />
+    </tr>
+  ));
+  return (
+    <div className="col-12">
+      <h1>
+        Equipamientos -
+        <button
+          className="btn btn-primary mb-2"
+          onClick={(event) => handleClickOpen(event)}
+        >
+          Agregar
+        </button>
+      </h1>
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Ubicacion</th>
+            <th>Estado</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>{equipamientosItems}</tbody>
+      </table>
+      <AddEquipamiento open={open} onClose={(event) => handleClose(event)} />
+    </div>
+  );
+};
+//----------------------------------------------------------------------
+
+
+
+//----------------------------------------------------------------------
+//              ADD EQUIPAMENT DIALOG
+//----------------------------------------------------------------------
+function AddEquipamiento(props) {
   const disponibilidad = [
     {
       value: "prestado",
@@ -64,7 +161,7 @@ function SimpleDialog(props) {
       aria-labelledby="simple-dialog-title"
       open={open}
     >
-      <DialogTitle id="simple-dialog-title">Editar pabellon</DialogTitle>
+      <DialogTitle id="simple-dialog-title">Agregar equipamiento</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Completa los campos para agregar un equipamiento.
@@ -135,83 +232,141 @@ function SimpleDialog(props) {
     </Dialog>
   );
 }
+//----------------------------------------------------------------------
 
-const EquipamientosPage = () => {
-  const [equipamientos, setEquipamientos] = useState([]);
-  const [open, setOpen] = React.useState(false);
- 
-  useEffect(() => {
+
+
+//----------------------------------------------------------------------
+//              EDIT EQUIPAMENT DIALOG
+//----------------------------------------------------------------------
+function EditEquipamiento(props, equip) {
+  const disponibilidad = [
+    {
+      value: "prestado",
+      label: "prestado",
+    },
+    {
+      value: "disponible",
+      label: "disponible",
+    },
+  ];
+  const { onClose, selectedValue, open } = props;
+  const { equipamiento } = equip;
+  const [nombre, setNombre] = useState(equip.nombre);
+  const [tipo, setTipo] = useState("");
+  const [ubicacion, setUbicacion] = useState("");
+  const [disponible, setDisponible] = React.useState("disponible");
+
+  const handleChange = (event) => {
+    console.log(event)
+    const keyname = event.target.name;
+    if (keyname === "nombre") {
+      setNombre(event.target.value);
+    } else if (keyname === "tipo") {
+      setTipo(event.target.value);
+    } else if (keyname === "ubicacion") {
+      setUbicacion(event.target.value);
+    } else if (keyname === "tipo") {
+      setTipo(event.target.value);
+    } else if (keyname === "estado") {
+      setDisponible(event.target.value);
+    } else {
+      setDisponible(event.target.value);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    console.log(event.target.value);
+    event.preventDefault();
     equipamientosService
-      .getEquipamientos()
+      .actualizarEquipamiento(equip.id, nombre, tipo, ubicacion, disponible)
       .then((res) => {
-        setEquipamientos(res.data);
         console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
       });
-  }, [equipamientos]);
-
-  const handleClickOpen = (event) => {
-    setOpen(true);
+    onClose(selectedValue);
   };
 
   const handleClose = (event) => {
-    setOpen(false);
+    onClose(selectedValue);
   };
 
-  const equipamientosItems = equipamientos.map((equipamiento) => (
-    console.log(equipamiento),
-    <tr key={equipamiento.id} >
-      <td>{equipamiento.nombre ?? "campo nulo"}</td>
-      <td>{equipamiento.tipo ?? "campo nulo"} </td>
-      <td>{equipamiento.ubicacion ?? "campo nulo"}</td>
-      <td>{equipamiento.estado ?? "campo nulo"}</td>
-      <td>
-        <button href="/equipamientos/" className="btn btn-warning">
-          Editar
-        </button>
-      </td>
-      <td>
+  return (
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="simple-dialog-title"
+      open={open}
+    >
+      <DialogTitle id="simple-dialog-title">Editar equipamiento</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Completa los campos para agregar un equipamiento.
+        </DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="nombre"
+          key="nombre"
+          name="nombre"
+          label="Nombre"
+          fullWidth
+          onChange={(event) => handleChange(event)}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="tipo"
+          key="tipo"
+          name="tipo"
+          label="Tipo"
+          onChange={(event) => handleChange(event)}
+          fullWidth
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="ubicacion"
+          key="ubicacion"
+          name="ubicacion"
+          label="Ubicacion"
+          fullWidth
+          onChange={(event) => handleChange(event)}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="estado"
+          name="estado"
+          select
+          fullWidth
+          label="Estado"
+          value={disponible}
+          onChange={(event) => handleChange(event)}
+        >
+          {disponibilidad.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
+      </DialogContent>
+      <DialogActions>
         <button
-          onClick={(event) => {
-            event.preventDefault();
-            equipamientosService.eliminarEquipamiento(equipamiento.id);
-          }}
+          onClick={(event) => handleClose(event)}
           className="btn btn-danger"
         >
-          Eliminar
+          Cancel
         </button>
-      </td>
-    </tr>
-  ));
-  return (
-    <div className="col-12">
-      <h1>
-        Equipamientos -
         <button
-          className="btn btn-primary mb-2"
-          onClick={(event) => handleClickOpen(event)}
+          type="submit"
+          onClick={(e) => handleSubmit(e)}
+          className="btn btn-warning"
         >
-          Agregar
+          Editar
         </button>
-      </h1>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Ubicacion</th>
-            <th>Estado</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>{equipamientosItems}</tbody>
-      </table>
-      <SimpleDialog open={open} onClose={(event) => handleClose(event)} />
-    </div>
+      </DialogActions>
+    </Dialog>
   );
-};
+}
+//----------------------------------------------------------------------
 
 export default EquipamientosPage;
