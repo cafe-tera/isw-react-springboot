@@ -8,7 +8,7 @@ Para instalar todas las modulos de node js
 Para iniciar el proyecto
 
 ## Documentacion APIs
-Rifeco - Equipamientos [https://documenter.getpostman.com/view/11507201/T1Dv8uXq?version=latest]
+Rifeco - Equipamientos (https://documenter.getpostman.com/view/11507201/T1Dv8uXq?version=latest)
 
 
 ## Available Scripts
