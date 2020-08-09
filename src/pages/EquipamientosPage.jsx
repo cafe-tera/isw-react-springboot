@@ -14,7 +14,6 @@ import equipamientosService from "../services/equipamientos.services";
 const EquipamientosPage = () => {
   const [equipamientos, setEquipamientos] = useState([]);
   const [open, setOpen] = React.useState(false);
-  const [openEdit, setOpenEdit] = React.useState(false);
  
   useEffect(() => {
     equipamientosService
@@ -36,14 +35,6 @@ const EquipamientosPage = () => {
     setOpen(false);
   };
 
-  const handleClickOpenEdit = (event) => {
-    setOpenEdit(true);
-  };
-
-  const handleCloseEdit = (event) => {
-    setOpenEdit(false);
-  };
-
   const equipamientosItems = equipamientos.map((equipamiento) => (
     console.log(equipamiento),
     <tr key={equipamiento.id} >
@@ -52,8 +43,19 @@ const EquipamientosPage = () => {
       <td>{equipamiento.ubicacion ?? "campo nulo"}</td>
       <td>{equipamiento.estado ?? "campo nulo"}</td>
       <td>
-        <button onClick={(event) => handleClickOpenEdit(event)} className="btn btn-warning">
-          Editar
+        <button onClick={(event) => {
+          event.preventDefault();
+          equipamientosService.prestarEquipamiento(equipamiento.id);
+        }} className="btn btn-primary mb-2">
+          Prestar
+        </button>
+      </td>
+      <td>
+        <button onClick={(event) => {
+          event.preventDefault();
+          equipamientosService.devolverEquipamiento(equipamiento.id);
+        }} className="btn btn-warning">
+          Devolver
         </button>
       </td>
       <td>
@@ -67,7 +69,7 @@ const EquipamientosPage = () => {
           Eliminar
         </button>
       </td>
-      <EditEquipamiento open={openEdit} equipamiento={equipamiento} onClose={(event) => handleCloseEdit(event)} />
+      {/* <EditEquipamiento open={openEdit} onClose={(event) => handleCloseEdit(event)} /> */}
     </tr>
   ));
   return (
@@ -88,7 +90,8 @@ const EquipamientosPage = () => {
             <th>Tipo</th>
             <th>Ubicacion</th>
             <th>Estado</th>
-            <th>Editar</th>
+            <th>Prestar</th>
+            <th>Devolver</th>
             <th>Eliminar</th>
           </tr>
         </thead>
@@ -227,141 +230,6 @@ function AddEquipamiento(props) {
           className="btn btn-primary mb-2"
         >
           Agregar
-        </button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-//----------------------------------------------------------------------
-
-
-
-//----------------------------------------------------------------------
-//              EDIT EQUIPAMENT DIALOG
-//----------------------------------------------------------------------
-function EditEquipamiento(props, equip) {
-  const disponibilidad = [
-    {
-      value: "prestado",
-      label: "prestado",
-    },
-    {
-      value: "disponible",
-      label: "disponible",
-    },
-  ];
-  const { onClose, selectedValue, open } = props;
-  const { equipamiento } = equip;
-  const [nombre, setNombre] = useState(equip.nombre);
-  const [tipo, setTipo] = useState("");
-  const [ubicacion, setUbicacion] = useState("");
-  const [disponible, setDisponible] = React.useState("disponible");
-
-  const handleChange = (event) => {
-    console.log(event)
-    const keyname = event.target.name;
-    if (keyname === "nombre") {
-      setNombre(event.target.value);
-    } else if (keyname === "tipo") {
-      setTipo(event.target.value);
-    } else if (keyname === "ubicacion") {
-      setUbicacion(event.target.value);
-    } else if (keyname === "tipo") {
-      setTipo(event.target.value);
-    } else if (keyname === "estado") {
-      setDisponible(event.target.value);
-    } else {
-      setDisponible(event.target.value);
-    }
-  };
-
-  const handleSubmit = (event) => {
-    console.log(event.target.value);
-    event.preventDefault();
-    equipamientosService
-      .actualizarEquipamiento(equip.id, nombre, tipo, ubicacion, disponible)
-      .then((res) => {
-        console.log(res);
-      });
-    onClose(selectedValue);
-  };
-
-  const handleClose = (event) => {
-    onClose(selectedValue);
-  };
-
-  return (
-    <Dialog
-      onClose={handleClose}
-      aria-labelledby="simple-dialog-title"
-      open={open}
-    >
-      <DialogTitle id="simple-dialog-title">Editar equipamiento</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Completa los campos para agregar un equipamiento.
-        </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="nombre"
-          key="nombre"
-          name="nombre"
-          label="Nombre"
-          fullWidth
-          onChange={(event) => handleChange(event)}
-        />
-        <TextField
-          autoFocus
-          margin="dense"
-          id="tipo"
-          key="tipo"
-          name="tipo"
-          label="Tipo"
-          onChange={(event) => handleChange(event)}
-          fullWidth
-        />
-        <TextField
-          autoFocus
-          margin="dense"
-          id="ubicacion"
-          key="ubicacion"
-          name="ubicacion"
-          label="Ubicacion"
-          fullWidth
-          onChange={(event) => handleChange(event)}
-        />
-        <TextField
-          autoFocus
-          margin="dense"
-          id="estado"
-          name="estado"
-          select
-          fullWidth
-          label="Estado"
-          value={disponible}
-          onChange={(event) => handleChange(event)}
-        >
-          {disponibilidad.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-      </DialogContent>
-      <DialogActions>
-        <button
-          onClick={(event) => handleClose(event)}
-          className="btn btn-danger"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          onClick={(e) => handleSubmit(e)}
-          className="btn btn-warning"
-        >
-          Editar
         </button>
       </DialogActions>
     </Dialog>

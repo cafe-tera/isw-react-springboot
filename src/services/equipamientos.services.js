@@ -32,6 +32,22 @@ const actualizarEquipamiento = async (id, nombre, tipo, ubicacion, disponibilida
   });
 };
 
+const prestarEquipamiento = async (id) => {
+  let url = `${API_URL}/equipamientos/${id}`;
+  return axios.put(url,  {
+    estado: "prestado"
+  });
+};
+
+const devolverEquipamiento = async (id) => {
+  let url = `${API_URL}/equipamientos/${id}`;
+  return axios.put(url,  {
+    estado: "disponible"
+  });
+};
+
+
+
 const eliminarEquipamiento = async (id) => {
   let url = `${API_URL}/equipamientos/${id}`;
   return axios.delete(url);
@@ -43,6 +59,8 @@ const equipamientosService = {
   crearEquipamiento,
   actualizarEquipamiento,
   eliminarEquipamiento,
+  prestarEquipamiento,
+  devolverEquipamiento,
 };
 
 export default equipamientosService;
