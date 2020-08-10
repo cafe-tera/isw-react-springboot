@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://isw.f4d3.io:8080/api/v1/"
+const API_URL = "http://isw.f4d3.io:8080/api/v1"
 
 
 const getPabellones = () => {
@@ -13,9 +13,14 @@ const getPabellonesById = (id) => {
     return axios.get(url);
 }
 
-const editPabellones = (id) => {
-    let url = `${API_URL}/pabellones/edit/${id}`;
-    return axios.put(url);
+const editPabellones = async (id, nombre, ubicacion, capacidad, disponible) => {
+    let url = `${API_URL}/pabellones/${id}`;
+    return axios.post(url, {
+        nombre: nombre,
+        ubicacion: ubicacion,
+        capacidad: capacidad,
+        estado: disponible
+    });
 }
 
 const deletePabellonesById = (id) => {
@@ -23,14 +28,22 @@ const deletePabellonesById = (id) => {
     return axios.delete(url);
 }
 
-const createPabellones = () => {
+const createPabellones = async (nombre, ubicacion, capacidad, disponible) => {
     let url = `${API_URL}/pabellones/`;
-    return axios.post(url);
+    return axios.post(url, {
+        nombre: nombre,
+        ubicacion: ubicacion,
+        capacidad: capacidad,
+        estado: disponible
+    });
 }
 
 const pabellonesService = {
     getPabellones,
     getPabellonesById,
+    deletePabellonesById,
+    createPabellones,
+    editPabellones
 };
 
 export default pabellonesService;

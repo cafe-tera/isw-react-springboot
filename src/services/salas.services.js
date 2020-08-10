@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://isw.f4d3.io:8080/api/v1/"
+const API_URL = "http://isw.f4d3.io:8080/api/v1"
 
 
 const getSalas = () => {
@@ -13,9 +13,14 @@ const getSalasById = (id) => {
     return axios.get(url);
 }
 
-const editSalas = (id) => {
-    let url = `${API_URL}/salasrec/edit/${id}`;
-    return axios.put(url);
+const editSalas = async (id, nombre, ubicacion, capacidad, disponible) => {
+    let url = `${API_URL}/salasrec/${id}`;
+    return axios.post(url, {
+        nombre: nombre,
+        ubicacion: ubicacion,
+        capacidad: capacidad,
+        estado: disponible
+    });
 }
 
 const deleteSalasById = (id) => {
@@ -23,14 +28,22 @@ const deleteSalasById = (id) => {
     return axios.delete(url);
 }
 
-const createSalas = () => {
+const createSalas = async (nombre, ubicacion, capacidad, disponible) => {
     let url = `${API_URL}/salasrec/`;
-    return axios.post(url);
+    return axios.post(url, {
+        nombre: nombre,
+        ubicacion: ubicacion,
+        capacidad: capacidad,
+        estado: disponible
+    });
 }
 
 const salasService = {
     getSalas,
     getSalasById,
+    deleteSalasById,
+    createSalas,
+    editSalas
 };
 
 export default salasService;
