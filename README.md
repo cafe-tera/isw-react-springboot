@@ -4,6 +4,12 @@
 ### `npm install`
 Para instalar todas las modulos de node js
 
+### `npm start`
+Para iniciar el proyecto
+
+## Documentacion APIs
+Rifeco - Equipamientos [https://documenter.getpostman.com/view/11507201/T1Dv8uXq?version=latest]
+
 
 ## Available Scripts
 
