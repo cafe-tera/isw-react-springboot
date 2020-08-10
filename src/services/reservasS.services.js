@@ -3,17 +3,17 @@ import axios from 'axios';
 const API_URL = "https://solicitudes-reservas.herokuapp.com"
 
 const getReservasS = () => {
-    let url = `${API_URL}/reservasillon`;
+    let url = `${API_URL}/reservasillon/`;
     return axios.get(url);
 }
 
 const addReservasS = (idSolicitud, idSillon, Reservado, Horario) => {
-    let url = `${API_URL}/reservasillon`;
+    let url = `${API_URL}/reservasillon/`;
     return axios.post(url,{
         idSolicitud: idSolicitud,
         idSillon: idSillon,
-        Reservado: Reservado,
-        Horario: Horario,
+        reservado: Reservado,
+        horario: Horario
     });
 }
 const deleteReservasS = (id) => {
@@ -26,8 +26,8 @@ const updateReservasS = (id, idSolicitud, idSillon, Reservado, Horario) => {
     return axios.put(url,{
       idSolicitud: idSolicitud,
       idSillon: idSillon,
-      Reservado: Reservado,
-      Horario: Horario,
+      reservado: Reservado,
+      horario: Horario
     });
 }
 

@@ -57,12 +57,32 @@ class App extends Component {
               </li>
               <li className="nav-item">
                 <Link to={"/pabellones"} className="nav-link">
-                  Pabellones
+                  Pabelllones
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to={"/salasrecuperacion"} className="nav-link">
-                  Salas de Recuperación
+                  Salas
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/ReservasP"} className="nav-link">
+                  Reservas de Pabellón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/ReservasS"} className="nav-link">
+                  Reservas de Sillón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/ReservasPForm"} className="nav-link">
+                  Reservar Pabellón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/ReservasSForm"} className="nav-link">
+                  Reservar Sillón
                 </Link>
               </li>
             </div>

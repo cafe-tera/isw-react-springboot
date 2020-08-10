@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import  { Container, Col, Form, FormGroup, Input, Button } from 'reactstrap';
 import reservasSService from '../services/reservasS.services';
-import NavigationComponent from "../components/NavigationComponent";
+//import NavigationComponent from "../components/NavigationComponent";
 
 const ReservasSFormPage = () => {
 
@@ -35,7 +35,6 @@ const ReservasSFormPage = () => {
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" 
                 integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" 
                 crossOrigin="anonymous"></link>
-            <NavigationComponent></NavigationComponent>
 
             <Container>
                     <Col sm="12" md={{ size: 6, offset: 4 }}>
@@ -48,9 +47,6 @@ const ReservasSFormPage = () => {
                         </FormGroup>
                         <FormGroup>
                             <Input type = "text" name = "idSolicitud" placeholder = "idSolicitud" onChange = {(event) => handleChange(event)}> </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Input type = "text" name = "Reservado" placeholder = "Reservado" onChange = {(event) => handleChange(event)}> </Input>
                         </FormGroup>
                         <FormGroup>
                             <Input type = "text" name = "Horario" placeholder = "Horario" onChange = {(event) => handleChange(event)}> </Input>

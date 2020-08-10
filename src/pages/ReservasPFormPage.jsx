@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import  { Container, Col, Form, FormGroup, Input, Button } from 'reactstrap';
 import reservasPService from '../services/reservasP.services';
-import NavigationComponent from "../components/NavigationComponent";
+//import NavigationComponent from "../components/NavigationComponent";
 
 const ReservasPFormPage = () => {
 
     const [idPabellon, setidPabellon] = useState('');
     const [idSolicitud, setidSolicitud] = useState('');
-    const [Reservado, setReservado] = useState('');
     const [Horario, setHorario] = useState('');
 
     const handleChange = (event) =>{
@@ -16,8 +15,6 @@ const ReservasPFormPage = () => {
             setidPabellon(event.target.value);
         } else if (keyname === "idSolicitud") {
             setidSolicitud(event.target.value);
-        } else if (keyname === "Reservado") {
-            setReservado(event.target.value);
         } else if (keyname === "Horario") {
             setHorario(event.target.value);
         }
@@ -25,7 +22,7 @@ const ReservasPFormPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        reservasPService.addReservasP(idPabellon, idSolicitud, Reservado, Horario).then(response => {
+        reservasPService.addReservasP(idPabellon, idSolicitud, Horario).then(response => {
             console.log(response);
         });
     }
@@ -35,7 +32,6 @@ const ReservasPFormPage = () => {
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" 
                 integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" 
                 crossOrigin="anonymous"></link>
-            <NavigationComponent></NavigationComponent>
 
             <Container>
                     <Col sm="12" md={{ size: 6, offset: 4 }}>
@@ -48,9 +44,6 @@ const ReservasPFormPage = () => {
                         </FormGroup>
                         <FormGroup>
                             <Input type = "text" name = "idSolicitud" placeholder = "idSolicitud" onChange = {(event) => handleChange(event)}> </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Input type = "text" name = "Reservado" placeholder = "Reservado" onChange = {(event) => handleChange(event)}> </Input>
                         </FormGroup>
                         <FormGroup>
                             <Input type = "text" name = "Horario" placeholder = "Horario" onChange = {(event) => handleChange(event)}> </Input>

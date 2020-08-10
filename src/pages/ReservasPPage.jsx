@@ -1,8 +1,9 @@
 import React,{useState, useEffect} from 'react';
 
-import NavigationComponent from '../components/NavigationComponent';
+//import NavigationComponent from '../components/NavigationComponent';
 import { Table, Col } from 'reactstrap';
 import reservasPService from '../services/reservasP.services';
+import pabellonesService from '../services/pabellones.services';
 
 const ReservasPPage = () => {
 
@@ -16,14 +17,21 @@ const ReservasPPage = () => {
     }, []);
 
     
-  const reservasPItems = reservasP.map((reservasP) =>
+const reservasPItems = reservasP.map((reservasP) =>
   <tr key={reservasP.id}>
-      <td> {reservasP.id} </td>
-      <td> {reservasP.idPabellon} </td>
-      <td> {reservasP.idSolicitud}</td>
-      <td> {reservasP.Reservado}</td>
-      <td> {reservasP.Horario}</td>
-
+        <td> {reservasP.id} </td>
+        <td> {reservasP.idPabellon} </td>
+        <td> {reservasP.idSolicitud}</td>
+        <td> {reservasP.horario}</td>
+        <td>
+            <button onClick={(event) => {
+                event.preventDefault();
+                reservasPService.deleteReservasP(reservasP.id);
+            }} className="btn btn-danger"
+            >
+                Eliminar
+            </button>
+        </td>
   </tr>
 );
     return(
@@ -31,7 +39,6 @@ const ReservasPPage = () => {
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" 
                 integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" 
                 crossOrigin="anonymous"></link>
-            <NavigationComponent></NavigationComponent>
                 <Col>
                     <Table>
                         <thead>
@@ -39,7 +46,6 @@ const ReservasPPage = () => {
                                 <td> id </td>
                                 <td> idPabellon </td>
                                 <td> idSolicitud </td>
-                                <td> Reservado </td>
                                 <td> Horario </td>
                             </tr>
                         </thead>
