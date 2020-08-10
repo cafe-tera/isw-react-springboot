@@ -31,10 +31,11 @@ const deletePabellonesById = (id) => {
 const createPabellones = async (nombre, ubicacion, capacidad, disponible) => {
     let url = `${API_URL}/pabellones/`;
     return axios.post(url, {
+        id: "",
         nombre: nombre,
         ubicacion: ubicacion,
-        capacidad: capacidad,
-        estado: disponible
+        capacidad: capacidad
+        // estado: disponible
     });
 }
 

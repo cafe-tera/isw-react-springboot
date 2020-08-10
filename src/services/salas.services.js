@@ -31,10 +31,11 @@ const deleteSalasById = (id) => {
 const createSalas = async (nombre, ubicacion, capacidad, disponible) => {
     let url = `${API_URL}/salasrec/`;
     return axios.post(url, {
+        id: "",
         nombre: nombre,
         ubicacion: ubicacion,
         capacidad: capacidad,
-        estado: disponible
+        // estado: disponible
     });
 }
 
