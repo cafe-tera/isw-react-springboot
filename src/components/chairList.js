@@ -5,6 +5,8 @@ import one from "../assets/silla2.png";
 import two from "../assets/silla3.png";
 import { Button } from 'react-bootstrap';
 import history from './../history';
+import salasService from '../services/salas.services';
+
 
 export default class ChairsList extends Component {
   constructor(props) {
@@ -13,11 +15,17 @@ export default class ChairsList extends Component {
     this.retrieveChairs = this.retrieveChairs.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveChair = this.setActiveChair.bind(this);
+    this.setActiveSala = this.setActiveSala.bind(this);
+
     this.removeAllChairs = this.removeAllChairs.bind(this);
     this.searchRoom = this.searchRoom.bind(this);
+    this.searchSalasByRoom = this.searchSalasByRoom.bind(this);
 
     this.state = {
       chairs: [],
+      salas: [],
+      currentSala: null,
+      currentIdSala:-1,
       currentChair: null,
       currentIndex: -1,
       searchRoom: ""
@@ -26,8 +34,24 @@ export default class ChairsList extends Component {
 
   componentDidMount() {
     this.retrieveChairs();
+
+    salasService.getSalas()
+      .then(data => {
+        let salasFromApi = data.data.map(sala => {
+          return { value: sala.id, display: sala.nombre };
+        });
+        this.setState({
+          salas: [
+          ].concat(salasFromApi)
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
+
+  
   onChangeSearchRoom(e) {
     const searchRoom = e.target.value;
 
@@ -63,6 +87,13 @@ export default class ChairsList extends Component {
       currentIndex: index
     });
   }
+  setActiveSala(Sala, IdSala) {
+    this.setState({
+      currentSala: Sala,
+      currentIdSala: IdSala
+    });
+    this.searchSalasByRoom();
+  }
 
   removeAllChairs() {
     ChairDataService.deleteAll()
@@ -87,8 +118,20 @@ export default class ChairsList extends Component {
         console.log(e);
       });
   }
+  searchSalasByRoom() {
+    ChairDataService.findByRoom(this.state.currentSala)
+      .then(response => {
+        this.setState({
+          chairs: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   render() {
-    const { searchRoom, chairs, currentChair, currentIndex } = this.state;
+    const { searchRoom, chairs, currentChair, currentIndex, currentIdSala,currentSala } = this.state;
 
     return (
       <div className="list row">
@@ -116,17 +159,17 @@ export default class ChairsList extends Component {
           <h4>Salas:</h4>
 
           <ul className="list-group">
-            {chairs &&
-              chairs.map((chair, index) => (
+            {this.state.salas &&
+              this.state.salas.map((sala) => (
                 <li
                   className={
                     "list-group-item " +
-                    (index === currentIndex ? "active" : "")
+                    (sala.value === currentIdSala? "active" : "")
                   }
-                  onClick={() => this.setActiveChair(chair, index)}
-                  key={index}
+                  onClick={() => this.setActiveSala(sala.display, sala.value)}
+                  key={sala.value}
                 >
-                  {chair.room}
+                  {sala.display}
                 </li>
               ))}
           </ul>
@@ -135,13 +178,35 @@ export default class ChairsList extends Component {
             className="m-3 btn btn-sm btn-danger"
             onClick={this.removeAllChairs}
           >
-            Eliminar Sillones
+            Eliminar todos los Sillones
           </button>
         </div>
+
         <div className="col-md-6">
+          <h4>Sillones:</h4>
+          <ul className="list-group">
+            {currentSala ? (
+              <ul className="list-group">
+                {chairs &&
+                  chairs.map((chair, index) => (
+                    <li
+                      className={
+                        "list-group-item " +
+                        (index === currentIndex ? "active" : "")
+                      }
+                      onClickCapture={() => this.setActiveChair(chair, index)}
+                      key={index}
+                    >
+                      {chair.patient}
+                    </li>
+                  ))}
+              </ul>
+            ) : (<div class="alert alert-primary" role="alert">Haga doble click en alguna sala</div>)}
+          </ul>
+
+          <hr />
           {currentChair ? (
             <div>
-              <h4>Sillón</h4>
               <div>
                 <label>
                   <strong>Sala:</strong>
@@ -171,11 +236,12 @@ export default class ChairsList extends Component {
               >
                 Editar
               </Link>
+            <hr />
             </div>
           ) : (
             <div>
               <br />
-              <p>Haga click en un Sillón</p>
+              <div class="alert alert-primary" role="alert">Tras clickear la sala, haga click en un sillón</div>
               <Button variant="btn btn-success" onClick={() => history.push("/add")}>Añadir</Button>
             </div>
           )}
