@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import  { Container, Col, Form, FormGroup, Input, Button } from 'reactstrap';
 import reservasSService from '../services/reservasS.services';
+import solicitudesSService from '../services/solicitudesS.services';
 //import NavigationComponent from "../components/NavigationComponent";
 
 const ReservasSFormPage = () => {
@@ -9,6 +10,9 @@ const ReservasSFormPage = () => {
     const [idSolicitud, setidSolicitud] = useState('');
     const [Reservado, setReservado] = useState('');
     const [Horario, setHorario] = useState('');
+    const [Paciente, setPaciente]=useState('');
+    const [Descripcion, setDescripcion]=useState('');
+    const [Solicitud, setSolicitud]=useState('');
 
     const handleChange = (event) =>{
         const keyname = event.target.name;
@@ -28,6 +32,10 @@ const ReservasSFormPage = () => {
         reservasSService.addReservasS(idSillon, idSolicitud, Reservado, Horario).then(response => {
             console.log(response);
         });
+        setSolicitud(solicitudesSService.getSolicitudS(idSolicitud));
+        setPaciente(Solicitud.idPaciente);
+        setDescripcion(Solicitud.descripcion);
+        solicitudesSService.deleteSolicitudesS(idSolicitud);
     }
 
     return(

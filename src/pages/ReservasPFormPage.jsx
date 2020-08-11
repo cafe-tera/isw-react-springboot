@@ -1,13 +1,17 @@
 import React, {useState} from "react";
 import  { Container, Col, Form, FormGroup, Input, Button } from 'reactstrap';
 import reservasPService from '../services/reservasP.services';
-//import NavigationComponent from "../components/NavigationComponent";
+import SolicitudesPService from '../services/solicitudesP.services';
 
 const ReservasPFormPage = () => {
 
     const [idPabellon, setidPabellon] = useState('');
     const [idSolicitud, setidSolicitud] = useState('');
     const [Horario, setHorario] = useState('');
+    const [Reservado, setReservado] = useState('true');
+    const [Paciente, setPaciente]=useState('');
+    const [Descripcion, setDescripcion]=useState('');
+    const [Solicitud, setSolicitud]=useState('');
 
     const handleChange = (event) =>{
         const keyname = event.target.name;
@@ -15,6 +19,8 @@ const ReservasPFormPage = () => {
             setidPabellon(event.target.value);
         } else if (keyname === "idSolicitud") {
             setidSolicitud(event.target.value);
+        }else if (keyname === "Reservado") {
+            setReservado(event.target.value);
         } else if (keyname === "Horario") {
             setHorario(event.target.value);
         }
@@ -22,9 +28,13 @@ const ReservasPFormPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        reservasPService.addReservasP(idPabellon, idSolicitud, Horario).then(response => {
+        reservasPService.addReservasP(idSolicitud, idPabellon, Reservado, Horario).then(response => {
             console.log(response);
         });
+        setSolicitud(SolicitudesPService.getSolicitudP(idSolicitud));
+        setPaciente(Solicitud.idPaciente);
+        setDescripcion(Solicitud.descripcion);
+        SolicitudesPService.deleteSolicitudesP(idSolicitud);
     }
 
     return(
@@ -44,7 +54,7 @@ const ReservasPFormPage = () => {
                         <FormGroup>
                             <Input type = "text" name = "idPabellon" placeholder = "idPabellon" onChange = {(event) => handleChange(event)}> </Input>
                         </FormGroup>
-                        <h5 className="text-white"> ID de la solicitud </h5>
+                        <h5 className="text-white"> ID de la solicitud</h5>
                         <FormGroup>
                             <Input type = "text" name = "idSolicitud" placeholder = "idSolicitud" onChange = {(event) => handleChange(event)}> </Input>
                         </FormGroup>
