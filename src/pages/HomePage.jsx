@@ -23,11 +23,11 @@ const HomePage = () => {
             <Row>
                 <Col>
                     <Container className='p-4'>
-                        <Jumbotron>
+                        <Jumbotron style={{ backgroundColor: "#69b0f7a1"}}>
                             <Row>
                                 <Col>
                                     <h1 className='header' style={{textAlign:"center"}}>
-                                        Menu
+                                        Bienvenidos a SIGIPAS
                                     </h1>
  
                                 </Col>
@@ -36,32 +36,40 @@ const HomePage = () => {
                     </Container>
                 </Col>
             </Row>
-            <Container>
+            <Container style={{ textAlign: "center" }}>
                 
                 <Row>
                     <Col sm={4}>
+                    <h4>Equipamiento</h4>
                     <Button variant="outline-info" style={{maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px'}}  onClick={() => history.push("/equipamiento")}><img src={equip} width="100"  alt="equipo"/></Button>
                     </Col>
                     <Col sm={4}>
+                    <h4>Reservas</h4>
                     <Button variant="outline-info" style={{maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px'}}  onClick={() => history.push("/")}><img src={reserva} width="100"  alt="reservas"/></Button>
                   
                     </Col>
                     <Col sm={4}>
+                    <h4>Sillones</h4>
                     <Button variant="outline-info" style={{maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px'}}  onClick={() => history.push("/add")}><img src={sillon} width="100"  alt="my image"/></Button>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col sm={4}>
+                    <h4>Equipos</h4>
                     <Button variant="outline-info" style={{maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px'}}  onClick={() => history.push("//")}><img src={team} width="100"  alt="my image"/></Button>
                     </Col>
                     <Col sm={4}>
+                    <h4>Salas</h4>
                     <Button variant="outline-info" style={{maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px'}} onClick={() => history.push("/")}><img src={sala} width="100"  alt="salas"/></Button>
                                       </Col>
                     <Col sm={4}>
+                    <h4>Pabellones</h4>
                     <Button variant="outline-info" style={{maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px'}}  onClick={() => history.push("/")}><img src={pabellon} width="100"   alt="pabellon"/></Button>
                                       </Col>
                 </Row>
             </Container>
+            <br/>
         </div>
     )
 }
