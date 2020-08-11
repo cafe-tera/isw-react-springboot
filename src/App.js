@@ -31,7 +31,7 @@ class App extends Component {
             <a href="/" className="navbar-brand">
             <img src={logo} width="45" alt="" className="d-inline-block align-middle mr-2">
              </img> 
-              Sigipab
+              SIGIPAS
             </a>
             <div className="navbar-nav mr-auto">
             <li className="nav-item">
