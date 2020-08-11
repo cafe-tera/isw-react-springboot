@@ -38,6 +38,7 @@ const EquipamientosPage = () => {
   const equipamientosItems = equipamientos.map((equipamiento) => (
     console.log(equipamiento),
     <tr key={equipamiento.id} >
+      <td>{equipamiento.id ?? "campo nulo"}</td>
       <td>{equipamiento.nombre ?? "campo nulo"}</td>
       <td>{equipamiento.tipo ?? "campo nulo"} </td>
       <td>{equipamiento.ubicacion ?? "campo nulo"}</td>
@@ -86,6 +87,7 @@ const EquipamientosPage = () => {
       <table className="table table-bordered">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Ubicacion</th>
