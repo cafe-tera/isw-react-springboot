@@ -2,31 +2,29 @@ import React,{useState, useEffect} from 'react';
 
 //import NavigationComponent from '../components/NavigationComponent';
 import { Table, Col } from 'reactstrap';
-import reservasPService from '../services/reservasP.services';
-import pabellonesService from '../services/pabellones.services';
+import solicitudesPService from '../services/solicitudesP.services';
 
-const ReservasPPage = () => {
+const SolicitudesPPage = () => {
 
-    const [reservasP, setReservasP] = useState([]);
+    const [solicitudesP, setSolicitudesP] = useState([]);
     useEffect(() => {
-        reservasPService.getReservasP().then(res =>{
-            setReservasP(res.data);
+        solicitudesPService.getSolicitudesP().then(res =>{
+            setSolicitudesP(res.data);
         }).catch(error => {
             console.log(error);
         });
     }, []);
 
     
-const reservasPItems = reservasP.map((reservasP) =>
-  <tr key={reservasP.id}>
-        <td> {reservasP.id} </td>
-        <td> {reservasP.idPabellon} </td>
-        <td> {reservasP.idSolicitud}</td>
-        <td> {reservasP.horario}</td>
+const solicitudesPItems = solicitudesP.map((solicitudesP) =>
+  <tr key={solicitudesP.id}>
+        <td> {solicitudesP.id} </td>
+        <td> {solicitudesP.idPaciente} </td>
+        <td> {solicitudesP.descripcion}</td>
         <td>
             <button onClick={(event) => {
                 event.preventDefault();
-                reservasPService.deleteReservasP(reservasP.id);
+                solicitudesPService.deleteSolicitudesP(solicitudesP.id);
                 window.location.reload();
             }} className="btn btn-danger"
             >
@@ -45,13 +43,12 @@ const reservasPItems = reservasP.map((reservasP) =>
                         <thead>
                             <tr>
                                 <td> id </td>
-                                <td> idPabellon </td>
-                                <td> idSolicitud </td>
-                                <td> Horario </td>
+                                <td> idPaciente </td>
+                                <td> Descripcion </td>
                             </tr>
                         </thead>
                         <tbody>
-                            {reservasPItems}
+                            {solicitudesPItems}
                         </tbody>
                     </Table>
                 </Col>
@@ -59,4 +56,4 @@ const reservasPItems = reservasP.map((reservasP) =>
     )
 }
 
-export default ReservasPPage;
+export default SolicitudesPPage;

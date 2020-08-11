@@ -26,6 +26,7 @@ const ReservasSPage = () => {
             <button onClick={(event) => {
                 event.preventDefault();
                 reservasSService.deleteReservasS(reservasS.id);
+                window.location.reload();
             }} className="btn btn-danger"
             >
                 Eliminar

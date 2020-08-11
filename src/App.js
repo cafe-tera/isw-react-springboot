@@ -17,6 +17,10 @@ import ReservasPFormPage from './pages/ReservasPFormPage';
 import ReservasSFormPage from './pages/ReservasSFormPage';
 import ReservasPPage from './pages/ReservasPPage';
 import ReservasSPage from './pages/ReservasSPage';
+import SolicitudesPFormPage from './pages/SolicitudesPFormPage';
+import SolicitudesSFormPage from './pages/SolicitudesSFormPage';
+import SolicitudesPPage from './pages/SolicitudesPPage';
+import SolicitudesSPage from './pages/SolicitudesSPage';
 
 class App extends Component {
   render() {
@@ -85,6 +89,26 @@ class App extends Component {
                   Reservar Sillón
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to={"/SolicitudesS"} className="nav-link">
+                  Solicitudes de Sillón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/SolicitudesP"} className="nav-link">
+                  Solicitudes de Pabellón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/SolicitudesSForm"} className="nav-link">
+                  Solicitar Sillón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/SolicitudesPForm"} className="nav-link">
+                  Solicitar Pabellón
+                </Link>
+              </li>
             </div>
           </nav>
 
@@ -102,6 +126,11 @@ class App extends Component {
               <Route exact path ="/ReservasS" component={ReservasSPage}></Route>
               <Route exact path = "/ReservasPForm" component= {ReservasPFormPage}></Route>
               <Route exact path = "/ReservasSForm" component ={ReservasSFormPage}></Route>
+              <Route exact path ="/SolicitudesP" component={SolicitudesPPage}></Route>
+              <Route exact path ="/SolicitudesS" component={SolicitudesSPage}></Route>
+              <Route exact path = "/SolicitudesPForm" component= {SolicitudesPFormPage}></Route>
+              <Route exact path = "/SolicitudesSForm" component ={SolicitudesSFormPage}></Route>
+
             </Switch>
           </div>
         </div>
