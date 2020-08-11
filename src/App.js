@@ -13,6 +13,11 @@ import Chair from "./components/Chair";
 import ChairsList from "./components/chairList";
 import PabellonesPage from './pages/PabellonesPage';
 import SalasPage from './pages/SalasPage';
+import ReservasPFormPage from './pages/ReservasPFormPage';
+import ReservasSFormPage from './pages/ReservasSFormPage';
+import ReservasPPage from './pages/ReservasPPage';
+import ReservasSPage from './pages/ReservasSPage';
+
 class App extends Component {
   render() {
     return (
@@ -60,6 +65,26 @@ class App extends Component {
                   Salas
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to={"/ReservasP"} className="nav-link">
+                  Reservas de Pabellón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/ReservasS"} className="nav-link">
+                  Reservas de Sillón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/ReservasPForm"} className="nav-link">
+                  Reservar Pabellón
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/ReservasSForm"} className="nav-link">
+                  Reservar Sillón
+                </Link>
+              </li>
             </div>
           </nav>
 
@@ -73,6 +98,10 @@ class App extends Component {
               <Route path="/chairs/:id" component={Chair} />
               <Route exact path ="/pabellones" component={PabellonesPage}></Route>
               <Route exact path ="/salasrecuperacion" component={SalasPage}></Route>
+              <Route exact path ="/ReservasP" component={ReservasPPage}></Route>
+              <Route exact path ="/ReservasS" component={ReservasSPage}></Route>
+              <Route exact path = "/ReservasPForm" component= {ReservasPFormPage}></Route>
+              <Route exact path = "/ReservasSForm" component ={ReservasSFormPage}></Route>
             </Switch>
           </div>
         </div>

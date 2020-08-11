@@ -18,6 +18,12 @@ const NavigationComponentDos = () => {
             <div className = "container center_div">
                 <Link to= "/equipamientos"> Equipamientos</Link>
             </div>
+            <div className = "container center_div">
+                <Link to= "/pabellones"> Pabellones</Link>
+            </div>
+            <div className = "container center_div">
+                <Link to= "/salasrecuperacion"> Salas de Recuperación</Link>
+            </div>
         </div>
     )
 }
